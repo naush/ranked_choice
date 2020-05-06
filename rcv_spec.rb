@@ -40,5 +40,23 @@ describe RCV do
       end
       it { is_expected.to eq(:joe) }
     end
+
+    context 'winners tie' do
+      subject do
+        RCV.new.count(
+          votes: [
+            [:liz],
+            [:liz],
+            [:joe],
+            [:joe]
+          ],
+          candidates: [
+            :joe,
+            :liz
+          ]
+        )
+      end
+      it { is_expected.to eq(:joe) }
+    end
   end
 end
