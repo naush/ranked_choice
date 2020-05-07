@@ -58,5 +58,25 @@ describe RCV do
       end
       it { is_expected.to eq(:joe) }
     end
+
+    context 'one round of instant runoff' do
+      subject do
+        RCV.new.count(
+          votes: [
+            [:liz, :joe, :don],
+            [:liz, :joe, :don],
+            [:joe, :liz, :don],
+            [:joe, :liz, :don],
+            [:don, :joe, :liz]
+          ],
+          candidates: [
+            :liz,
+            :don,
+            :joe
+          ]
+        )
+      end
+      it { is_expected.to eq(:joe) }
+    end
   end
 end
