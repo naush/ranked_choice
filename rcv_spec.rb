@@ -13,11 +13,11 @@ describe RCV do
       subject do
         RCV.new.count(
           votes: [
-            [:liz],
+            [:liz]
           ],
-          candidates: [
-            :liz,
-            :joe
+          candidates: %i[
+            liz
+            joe
           ]
         )
       end
@@ -32,9 +32,9 @@ describe RCV do
             [:joe],
             [:joe]
           ],
-          candidates: [
-            :liz,
-            :joe
+          candidates: %i[
+            liz
+            joe
           ]
         )
       end
@@ -50,9 +50,9 @@ describe RCV do
             [:joe],
             [:joe]
           ],
-          candidates: [
-            :joe,
-            :liz
+          candidates: %i[
+            joe
+            liz
           ]
         )
       end
@@ -63,16 +63,38 @@ describe RCV do
       subject do
         RCV.new.count(
           votes: [
-            [:liz, :joe, :don],
-            [:liz, :joe, :don],
-            [:joe, :liz, :don],
-            [:joe, :liz, :don],
-            [:don, :joe, :liz]
+            %i[liz joe don],
+            %i[liz joe don],
+            %i[joe liz don],
+            %i[joe liz don],
+            %i[don joe liz]
           ],
-          candidates: [
-            :liz,
-            :don,
-            :joe
+          candidates: %i[
+            liz
+            don
+            joe
+          ]
+        )
+      end
+      it { is_expected.to eq(:joe) }
+    end
+
+    context 'losers tie' do
+      subject do
+        RCV.new.count(
+          votes: [
+            %i[liz joe don],
+            %i[liz joe don],
+            %i[liz joe don],
+            %i[joe liz don],
+            %i[joe liz don],
+            %i[don joe liz],
+            %i[don joe liz]
+          ],
+          candidates: %i[
+            liz
+            don
+            joe
           ]
         )
       end
