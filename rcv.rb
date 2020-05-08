@@ -2,16 +2,13 @@
 
 class RCV
   def count(votes:, candidates:)
-    return nil if candidates.empty?
+    winner = nil
 
-    candidate_votes = count_vote(votes, candidates)
-    winner = winner(candidate_votes, candidates)
-
-    if winner.nil?
-      loser = loser(candidate_votes, candidates)
-      candidates.delete(loser)
+    while winner.nil? && candidates.any?
       candidate_votes = count_vote(votes, candidates)
       winner = winner(candidate_votes, candidates)
+      loser = loser(candidate_votes, candidates)
+      candidates.delete(loser)
     end
 
     winner

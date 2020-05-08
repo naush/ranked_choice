@@ -100,5 +100,31 @@ describe RCV do
       end
       it { is_expected.to eq(:joe) }
     end
+
+    context 'multiple rounds of instant runoff' do
+      subject do
+        RCV.new.count(
+          votes: [
+            %i[don liz joe andy],
+            %i[don liz joe andy],
+            %i[don liz joe andy],
+            %i[don liz joe andy],
+            %i[joe liz andy don],
+            %i[joe liz andy don],
+            %i[joe liz andy don],
+            %i[liz joe andy don],
+            %i[liz joe andy don],
+            %i[andy liz joe don]
+          ],
+          candidates: %i[
+            don
+            joe
+            liz
+            andy
+          ]
+        )
+      end
+      it { is_expected.to eq(:liz) }
+    end
   end
 end
